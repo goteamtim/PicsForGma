@@ -3,28 +3,28 @@ function checkMessage() {
   //This is probably not necessary as every email will likely have an attachment but in case
   //things change and I need to do something else at some point I wanted to keep this.
   
-  var check = GmailApp.getUserLabelByName("grandma");
+  var label = GmailApp.getUserLabelByName("grandma");
   
   //naming the folder
   var folder = DocsList.getFolder('grandma');
   //Get the threads with the label
   
-  var potential = check.getThreads();
   
-  //var test = potential.getMessages();
+  //var newMsg = threads.getMessages();
   
-  //If the message is unread, get the attachment otherwise leave the loop.
-  
-  while (var i=0;i< potential.length; i++){
+ 
+  var threads = label.getThreads();
+  for (var i=0;i< threads.length; i++){
     
-    if(potential[i].isUnread() === true){
-      //get the attachment
+    if(threads[i].isUnread() === true){
       
-      var newMsg = potential[i].getMessages();
+      
+      var newMsg = threads[i].getMessages();
       var newAtch = newMsg[i].getAttachments();
+     
       var getPic = newAtch[i].copyBlob();
       var file = folder.createFile(getPic);
-      potential[i].markRead();
+      threads[i].markRead();
     }
     else
       //I believe this will increment i and begin the loop again.  Need to double check.
